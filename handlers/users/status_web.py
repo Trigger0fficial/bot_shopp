@@ -25,20 +25,16 @@ def now_lvl():
 lvl = now_lvl
 
 
-@dp.message_handler(Command('status'))
-async def show_status(message: Message):
-    if message.from_user.id == 745832259:
-        await message.answer(f'Твое имя - {message.from_user.full_name}'
-                             f'Твой id - {message.from_user.id}\n'
-                             f'Ты в команде находишься c {user_date}\n'
-                             f'Всего приглашенных пользователей - {user_all_count}\n'
-                             f'Твой уровень в TRIGGER - {user_lvl["x3"]}\n'
-                             f'Твоя выплата - {user_pay}')
-    else:
-        await message.answer('К сожалению ты не являешься партнером TRIGGER\n'
-                             'Ознакомься как стать Web master из пункта /menu')
+# @dp.message_handler(Command('status'))
+# async def show_status(message: Message):
+#     if message.from_user.id == 745832259:
+#         await message.answer(f'Твое имя - {message.from_user.full_name}'
+#                              f'Твой id - {message.from_user.id}\n'
+#                              f'Ты в команде находишься c {user_date}\n'
+#                              f'Всего приглашенных пользователей - {user_all_count}\n'
+#                              f'Твой уровень в TRIGGER - {user_lvl["x3"]}\n'
+#                              f'Твоя выплата - {user_pay}')
+#     else:
+#         await message.answer('К сожалению ты не являешься партнером TRIGGER\n'
+#                              'Ознакомься как стать Web master из пункта /menu')
 
-#
-# ADMINS = 745832259
-# BOT_TOKEN = 1947164505:AAHSW3O2Zl8gUAB0BcTU7fF1W_aQ0SzufjU
-# ip=localhost
