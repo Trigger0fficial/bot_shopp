@@ -3,12 +3,15 @@ from aiogram.types import ReplyKeyboardMarkup, KeyboardButton
 menu = ReplyKeyboardMarkup(
     keyboard=[
         [
-            KeyboardButton(text='Купить FORECAST')
+            KeyboardButton(text='Купить FORECAST ✅')
         ],
         [
-            KeyboardButton('Стать Web master'),
-            KeyboardButton('INFO')
+            KeyboardButton('Стать Web master🔥'),
+            KeyboardButton('INFO WEB⚠')
         ],
+        [
+
+        ]
     ],
     resize_keyboard=True
 )
@@ -16,12 +19,22 @@ menu = ReplyKeyboardMarkup(
 choice = ReplyKeyboardMarkup(
     keyboard=[
         [
-            KeyboardButton(text='Купить 600р'),
-            KeyboardButton(text='VIP канал - 250р')
+            KeyboardButton(text='Купить 600р✅'),
+            KeyboardButton(text='VIP канал - 250р🔓')
         ],
         [
-            KeyboardButton(text='Использовать купон - 500р')
+            KeyboardButton(text='Использовать купон - 500р💣')
         ],
+
     ],
     resize_keyboard=True
+)
+
+info = ReplyKeyboardMarkup(
+    keyboard=[
+        [
+            KeyboardButton(text='Соглашение'),
+            KeyboardButton(text='Тех поддержка')
+        ]
+    ]
 )
