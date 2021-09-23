@@ -9,7 +9,7 @@ from keyboards.default.menu import choice, info
 from loader import dp
 from states.verification_coupon import State_coupon
 
-all_web = [453881767, 679823483, 1751888736, 745832259, 720438045, 1234]
+all_web = [453881767, 679823483, 1751888736, 745832259, 720438045, 1234, 987]
 lvl_web = {'x1': 0.2, 'x2': 0.35, 'x3': 0.5}
 
 
@@ -48,15 +48,24 @@ list_web_master = [
     Web_master(user_id=679823483, user_name='Vladislav', user_date='22.09', render_lvl='x3'),
     Web_master(user_id=1751888736, user_name='Sergey', user_date='22.09', render_lvl='x3'),
     Web_master(user_id=745832259, user_name='Dima', user_date='21.09', render_lvl='x3'),
-    Web_master(user_id=720438045, user_name='Katya', user_date='22.09', render_lvl='x1')
+    Web_master(user_id=720438045, user_name='Katya', user_date='22.09', render_lvl='x1'),
+    Web_master(user_id=1234, user_name='Valera',user_date='23.09', render_lvl='x1'),
+    Web_master(user_id=987, user_name='Advin', user_date='23.09', render_lvl='x3'),
+
+
 ]
 
 
 
 def activity_web_master():
-    list_web_master[3].profit_web(lvl=lvl_web['x1'])
-    list_web_master[3].profit_web(lvl=lvl_web['x3'])
-    list_web_master[3].paid_web()
+    list_web_master[3].profit_web(lvl=lvl_web['x1']),
+    list_web_master[3].profit_web(lvl=lvl_web['x3']),
+    list_web_master[3].paid_web(),
+    list_web_master[5].profit_web(lvl=lvl_web['x1']),
+    list_web_master[5].paid_web(),
+    list_web_master[6].profit_web(lvl=lvl_web['x3']),
+    list_web_master[6].profit_web(lvl=lvl_web['x3']),
+    list_web_master[6].paid_web()
 
     for web in list_web_master:
         print(web.__str__())
