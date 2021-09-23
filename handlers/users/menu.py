@@ -65,7 +65,7 @@ def activity_web_master():
     list_web_master[5].paid_web(),
     list_web_master[6].profit_web(lvl=lvl_web['x3']),
     list_web_master[6].profit_web(lvl=lvl_web['x3']),
-    list_web_master[6].paid_web()
+
 
     for web in list_web_master:
         print(web.__str__())
