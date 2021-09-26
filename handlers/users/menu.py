@@ -9,7 +9,7 @@ from keyboards.default.menu import choice, info
 from loader import dp
 from states.verification_coupon import State_coupon
 
-all_web = [453881767, 679823483, 1751888736, 745832259, 720438045,]
+all_web = [453881767, 679823483, 1751888736, 745832259, 720438045, 1935538508,]
 lvl_web = {'x1': 0.2, 'x2': 0.35, 'x3': 0.5}
 
 
