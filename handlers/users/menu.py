@@ -49,6 +49,7 @@ list_web_master = [
     Web_master(user_id=1751888736, user_name='Sergey', user_date='22.09', render_lvl='x3'),
     Web_master(user_id=745832259, user_name='Dima', user_date='21.09', render_lvl='x3'),
     Web_master(user_id=720438045, user_name='Katya', user_date='22.09', render_lvl='x1'),
+    Web_master(user_id=1935538508, user_name='Misha', user_date='25.09', render_lvl='x1'),
 
 
 
