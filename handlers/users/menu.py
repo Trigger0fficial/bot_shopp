@@ -9,8 +9,9 @@ from keyboards.default.menu import choice, info
 from loader import dp
 from states.verification_coupon import State_coupon
 
-all_web = [453881767, 679823483, 1751888736, 745832259, 720438045, 1935538508,]
+all_web = [453881767, 679823483, 1751888736, 745832259, 720438045, 1935538508, ]
 lvl_web = {'x1': 0.2, 'x2': 0.35, 'x3': 0.5}
+list_admin = [745832259, 869546657]
 
 
 class Web_master:
@@ -41,8 +42,6 @@ class Web_master:
                f'Pay_web: {self.user_pay}'
 
 
-
-
 list_web_master = [
     Web_master(user_id=453881767, user_name='Anton', user_date='22.09', render_lvl='x1'),
     Web_master(user_id=679823483, user_name='Vladislav', user_date='22.09', render_lvl='x3'),
@@ -51,11 +50,7 @@ list_web_master = [
     Web_master(user_id=720438045, user_name='Katya', user_date='22.09', render_lvl='x1'),
     Web_master(user_id=1935538508, user_name='Misha', user_date='25.09', render_lvl='x1'),
 
-
-
-
 ]
-
 
 
 def activity_web_master():
@@ -74,7 +69,6 @@ def admin_trigger():
         total_count_invited += web.user_all_count_invited
         total_web += 1
 
-
     print(f'\n--------Admin---------'
           f'\nTotal web: {total_web}\n'
           f'All invited: {total_count_invited}\n'
@@ -92,7 +86,7 @@ async def show_menu(message: Message):
 
 
 @dp.message_handler(Text(equals=['Купить FORECAST ✅', 'Стать Web master🔥',
-                                 'INFO WEB⚠',]))
+                                 'INFO WEB⚠', ]))
 async def get_food(message: Message):
     if message.text == 'INFO WEB⚠':
         await message.answer('Решил стать Вебмастером проекта TRIGGER? Отлично!\n'
@@ -139,7 +133,7 @@ async def get_food(message: Message):
 @dp.message_handler(Text(equals=['Купить 600р✅']))
 async def buy_product(message: Message):
     if message.text == 'Купить 600р✅':
-        comment = message.from_user.username + "2e"+str(message.from_user.id)
+        comment = message.from_user.username + "2e" + str(message.from_user.id)
         await message.answer(f'Ты выбрал к покупке продукт FORECAST.\n\n'
                              f'Чтобы оплатить продукт, тебе необходимо \n'
                              f'воспользоваться переводом средств на карту:\n'
@@ -175,7 +169,7 @@ async def get_user_coupon(message: Message, state: FSMContext):
                              f'{comment_user}\nИ указать соотвествующую сумму выбранного вами \nпакета❗️\n'
                              f'ℹ️В ином случае твоя покупка будет считаться\n'
                              f'незафиксированной ℹ️', reply_markup=ReplyKeyboardRemove()
-        )
+                             )
         await state.finish()
     else:
         await message.answer('К сожалению, такого купона нет!')
@@ -199,6 +193,16 @@ async def show_status(message: Message):
                              'Ознакомься как стать Web master из пункта /menu')
 
 
+@dp.message_handler(Command('admin'))
+async def show_admin(message: Message):
+    if message.from_user.id in list_admin:
+        for web in list_web_master:
+            await message.answer(web.__str__())
+    else:
+        await message.answer('Информация недоступна!\n'
+                             'Ты не являешься администратором проекта')
+
+
 @dp.message_handler(Text(equals=['VIP канал - 250р🔓']))
 async def show_vip_channel(message: Message):
     comment = message.from_user.username + '2e' + str(message.from_user.id)
@@ -212,3 +216,10 @@ async def show_vip_channel(message: Message):
                          f'ℹ️В ином случае твоя покупка будет считаться\n'
                          f'незафиксированной ℹ️',
                          reply_markup=ReplyKeyboardRemove())
+
+
+@dp.message_handler(Text(equals=['Демо FORECAST🔥']))
+async def show_demo(message: Message):
+    await message.answer('В разработке.', reply_markup=ReplyKeyboardRemove())
+
+

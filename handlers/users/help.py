@@ -12,6 +12,7 @@ async def bot_help(message: types.Message):
             "/menu - Открыть меню",
             "/agreement - Пользовательское соглашение",
             "/status - Посмотреть Web аккаунт",
+            "/admin - Для админа проекта"
             )
     
     await message.answer("\n".join(text))

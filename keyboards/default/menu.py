@@ -3,7 +3,8 @@ from aiogram.types import ReplyKeyboardMarkup, KeyboardButton
 menu = ReplyKeyboardMarkup(
     keyboard=[
         [
-            KeyboardButton(text='Купить FORECAST ✅')
+            KeyboardButton(text='Купить FORECAST ✅'),
+
         ],
         [
             KeyboardButton('Стать Web master🔥'),
@@ -23,7 +24,8 @@ choice = ReplyKeyboardMarkup(
             KeyboardButton(text='VIP канал - 250р🔓')
         ],
         [
-            KeyboardButton(text='Использовать купон - 500р💣')
+            KeyboardButton(text='Использовать купон - 500р💣'),
+            KeyboardButton(text='Демо FORECAST🔥')
         ],
 
     ],
