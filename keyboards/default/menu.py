@@ -20,11 +20,11 @@ menu = ReplyKeyboardMarkup(
 choice = ReplyKeyboardMarkup(
     keyboard=[
         [
-            KeyboardButton(text='Купить 600р✅'),
+            KeyboardButton(text='Купить 1200р✅'),
             KeyboardButton(text='VIP канал - 250р🔓')
         ],
         [
-            KeyboardButton(text='Использовать купон - 500р💣'),
+            KeyboardButton(text='Использовать купон - 1000р💣'),
             KeyboardButton(text='Демо FORECAST🔥')
         ],
 
