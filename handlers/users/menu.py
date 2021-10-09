@@ -17,7 +17,8 @@ list_admin = [745832259, 869546657]
 
 
 class Web_master:
-    def __init__(self, user_id, user_name, user_date, user_all_count_invited=0, user_lvl='x1', render_lvl='x1', aff=None):
+    def __init__(self, user_id, user_name, user_date, user_all_count_invited=0, user_lvl='x1', render_lvl='web',
+                 aff=None):
         self.user_id = user_id
         self.user_name = user_name
         self.user_date = user_date
@@ -36,7 +37,6 @@ class Web_master:
         else:
             self.user_pay += lvl * price_forecast
 
-
     def paid_web(self):
         self.user_pay = 0
         self.user_count_invited = 0
@@ -52,18 +52,26 @@ class Web_master:
 
 class Affiliates(Web_master):
 
+    def __init__(self, user_id, user_name, user_date):
+        super().__init__(user_id=user_id, user_name=user_name, user_date=user_date, user_lvl='x1', render_lvl='web')
+        self.web_count = 0
+        self.total_web_invited = 0
+        self.web_invited = 0
+        self.pay_new_web = 0
+        self.pay_act_web = 0
+        self.total_pay = 0
+
     def profit_web(self, lvl):
         for web_master in list_web_master:
             if web_master.aff == self.user_id:
-                self.user_count_invited += 1
-                self.user_pay += lvl * price_web_master
+                self.total_web_invited += web_master.user_all_count_invited
+                self.pay_act_web += web_master.user_all_count_invited * price_web_master * lvl
 
     def new_web_master(self, lvl):
-        self.user_count_invited += 1
-        self.user_all_count_invited += 1
-        self.user_pay += lvl * price_forecast
-
-
+        for web_master in list_web_master:
+            if web_master.aff == self.user_id:
+                self.web_count += 1
+                self.pay_new_web += lvl * price_web_master
 
 
 
@@ -71,20 +79,22 @@ class Affiliates(Web_master):
         return f'-----------------------Affiliates---------------------------\n' \
                f'Name_web: {self.user_name}\nId_web: {self.user_id}\n' \
                f'Date_web: {self.user_date}\nLvl_web: {self.render_lvl}\n' \
-               f'Total_user: {self.user_all_count_invited}  Now_user: {self.user_count_invited}\n' \
-               f'Pay_web: {self.user_pay}\n' \
+               f'Total_user: {self.web_count}  Act_web: {self.total_web_invited}\n' \
+               f'Pay_new_web: {self.pay_new_web}\n' \
+               f'Pay_act_web: {self.pay_act_web}' \
 
 
 
 list_affiliates = [
-    Affiliates(user_id=1234, user_name='Test', user_date='08.10', render_lvl='aff'),
-    Affiliates(user_id=4321, user_name='Sasha', user_date='09.10', render_lvl='aff')
+    Affiliates(user_id=1234, user_name='Test', user_date='08.10'),
+    Affiliates(user_id=4321, user_name='Sasha', user_date='09.10')
 ]
 
 list_web_master = [
     Web_master(user_id=1935538508, user_name='Misha', user_date='25.09', render_lvl='web', aff=4321),
     Web_master(user_id=1935538504, user_name='Dima', user_date='25.09', render_lvl='web', aff=4321),
-    Web_master(user_id=1935538504, user_name='Dima', user_date='25.09', render_lvl='web', aff=4321)
+    Web_master(user_id=1935538504, user_name='Dima', user_date='25.09', render_lvl='web', aff=4321),
+    Web_master(user_id=1935538504, user_name='Test', user_date='25.09', render_lvl='web', aff=4321)
 
 ]
 
@@ -102,11 +112,14 @@ def activity_web_master():
     list_web_master[0].profit_web(lvl=lvl_web['web'])
     list_web_master[0].profit_web(lvl=lvl_web['web'])
     list_web_master[0].profit_web(lvl=lvl_web['web'])
+    list_web_master[0].profit_web(lvl=lvl_web['web'])
+    list_web_master[-1].profit_web(lvl=lvl_web['web'])
+    list_web_master[-1].profit_web(lvl=lvl_web['web'])
+    list_web_master[-1].profit_web(lvl=lvl_web['web'])
+    list_web_master[-1].profit_web(lvl=lvl_web['web'])
 
     for web in list_web_master:
         print(web.__str__())
-
-
 
 
 def admin_trigger():
@@ -285,5 +298,3 @@ async def show_vip_channel(message: Message):
 @dp.message_handler(Text(equals=['Демо FORECAST🔥']))
 async def show_demo(message: Message):
     await message.answer('В разработке.', reply_markup=ReplyKeyboardRemove())
-
-
