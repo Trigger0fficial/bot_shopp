@@ -18,7 +18,7 @@ list_admin = [745832259, 869546657]
 
 class Web_master:
     def __init__(self, user_id, user_name, user_date, user_all_count_invited=0, user_lvl='x1', render_lvl='web',
-                 aff=None):
+                 aff=0):
         self.user_id = user_id
         self.user_name = user_name
         self.user_date = user_date
@@ -32,7 +32,7 @@ class Web_master:
     def profit_web(self, lvl):
         self.user_count_invited += 1
         self.user_all_count_invited += 1
-        if self.aff == None:
+        if self.aff == 0:
             self.user_pay += 0.4 * price_forecast
         else:
             self.user_pay += lvl * price_forecast
@@ -43,17 +43,17 @@ class Web_master:
 
     def __str__(self):
         return f'-----------------------Web_master---------------------------\n' \
-               f'Name_web: {self.user_name}\nId_web: {self.user_id}\n' \
-               f'Date_web: {self.user_date}\nLvl_web: {self.render_lvl}\n' \
-               f'Total_user: {self.user_all_count_invited}  Now_user: {self.user_count_invited}\n' \
-               f'Pay_web: {self.user_pay}\n' \
-               f'Invited - {self.aff}'
+               f'Имя: {self.user_name}\nID: {self.user_id}\n' \
+               f'Дата создания ячейки: {self.user_date}\n' \
+               f'Всего пользователей приглашено: {self.user_all_count_invited}\nНеоплаченных пользователей: {self.user_count_invited}\n' \
+               f'Выплата: {self.user_pay}\n' \
+               f'Пригласил - {self.aff}'
 
 
 class Affiliates(Web_master):
 
     def __init__(self, user_id, user_name, user_date):
-        super().__init__(user_id=user_id, user_name=user_name, user_date=user_date, user_lvl='x1', render_lvl='web')
+        super().__init__(user_id=user_id, user_name=user_name, user_date=user_date, user_lvl='x1', render_lvl='aff')
         self.web_count = 0
         self.total_web_invited = 0
         self.web_invited = 0
@@ -65,7 +65,7 @@ class Affiliates(Web_master):
         for web_master in list_web_master:
             if web_master.aff == self.user_id:
                 self.total_web_invited += web_master.user_all_count_invited
-                self.pay_act_web += web_master.user_all_count_invited * price_web_master * lvl
+                self.pay_act_web += web_master.user_all_count_invited * price_forecast * lvl
 
     def new_web_master(self, lvl):
         for web_master in list_web_master:
@@ -77,24 +77,25 @@ class Affiliates(Web_master):
 
     def __str__(self):
         return f'-----------------------Affiliates---------------------------\n' \
-               f'Name_web: {self.user_name}\nId_web: {self.user_id}\n' \
-               f'Date_web: {self.user_date}\nLvl_web: {self.render_lvl}\n' \
-               f'Total_user: {self.web_count}  Act_web: {self.total_web_invited}\n' \
-               f'Pay_new_web: {self.pay_new_web}\n' \
-               f'Pay_act_web: {self.pay_act_web}' \
+               f'Имя: {self.user_name}\nID: {self.user_id}\n' \
+               f'Дата создание ячейки: {self.user_date}\n' \
+               f'Всего web master приглашено: {self.web_count}\nАктивность web master: {self.total_web_invited}\n' \
+               f'Оплата за web master: {self.pay_new_web}\n' \
+               f'Оплата за активность web master: {self.pay_act_web}' \
 
 
 
 list_affiliates = [
-    Affiliates(user_id=1234, user_name='Test', user_date='08.10'),
-    Affiliates(user_id=4321, user_name='Sasha', user_date='09.10')
+    Affiliates(user_name='Dima', user_id=745832259, user_date='10.10'),
+    Affiliates(user_name='Valera', user_id=869546657, user_date='10.10'),
 ]
 
 list_web_master = [
-    Web_master(user_id=1935538508, user_name='Misha', user_date='25.09', render_lvl='web', aff=4321),
-    Web_master(user_id=1935538504, user_name='Dima', user_date='25.09', render_lvl='web', aff=4321),
-    Web_master(user_id=1935538504, user_name='Dima', user_date='25.09', render_lvl='web', aff=4321),
-    Web_master(user_id=1935538504, user_name='Test', user_date='25.09', render_lvl='web', aff=4321)
+    Web_master(user_id=1935538508, user_name='Misha', user_date='25.09', render_lvl='web'),
+    Web_master(user_id=56789, user_name='Sergey', user_date='09.10', render_lvl='web', aff=745832259),
+    Web_master(user_id=53456, user_name='Slava', user_date='09.10', render_lvl='web', aff=1234),
+    Web_master(user_id=5678942342, user_name='Sergey', user_date='09.10', render_lvl='web', aff=745832259)
+
 
 ]
 
@@ -109,14 +110,14 @@ def activity_affiliates():
 
 
 def activity_web_master():
-    list_web_master[0].profit_web(lvl=lvl_web['web'])
-    list_web_master[0].profit_web(lvl=lvl_web['web'])
-    list_web_master[0].profit_web(lvl=lvl_web['web'])
-    list_web_master[0].profit_web(lvl=lvl_web['web'])
-    list_web_master[-1].profit_web(lvl=lvl_web['web'])
-    list_web_master[-1].profit_web(lvl=lvl_web['web'])
-    list_web_master[-1].profit_web(lvl=lvl_web['web'])
-    list_web_master[-1].profit_web(lvl=lvl_web['web'])
+    list_web_master[2].profit_web(lvl=lvl_web['web'])
+    list_web_master[1].profit_web(lvl=lvl_web['web'])
+    list_web_master[2].profit_web(lvl=lvl_web['web'])
+    list_web_master[3].profit_web(lvl=lvl_web['web'])
+    list_web_master[3].profit_web(lvl=lvl_web['web'])
+    list_web_master[3].profit_web(lvl=lvl_web['web'])
+    list_web_master[3].profit_web(lvl=lvl_web['web'])
+
 
     for web in list_web_master:
         print(web.__str__())
@@ -257,13 +258,22 @@ async def get_user_coupon(message: Message, state: FSMContext):
 async def show_status(message: Message):
     for web in list_web_master:
         if message.from_user.id == web.user_id:
-            await message.answer(f'Твое имя - {message.from_user.full_name}\n'
-                                 f'Твой id - {message.from_user.id}\n'
-                                 f'Ты в команде c {web.user_date}\n'
+            await message.answer(f'Имя - {message.from_user.full_name}\n'
+                                 f'ID - {message.from_user.id}\n'
+                                 f'Дата создания ячейки -  {web.user_date}\n'
                                  f'Всего приглашенных пользователей - {web.user_all_count_invited}\n'
                                  f'Неоплаченных пользователей - {web.user_count_invited}\n'
-                                 f'Твой уровень в TRIGGER - {web.render_lvl}\n'
-                                 f'Твоя выплата - {web.user_pay}', reply_markup=ReplyKeyboardRemove())
+                                 f'Выплата - {web.user_pay}', reply_markup=ReplyKeyboardRemove())
+            break
+    for aff in list_affiliates:
+        if message.from_user.id == aff.user_id:
+            await message.answer(f'Имя - {aff.user_name}\n'
+                                 f'ID - {aff.user_id}\n'
+                                 f'Дата создания ячейки - {aff.user_date}\n'
+                                 f'Всего приглашенных web master - {aff.web_count}\n'
+                                 f'Активность web master - {aff.total_web_invited}\n'
+                                 f'Выплата за новых web master - {aff.pay_new_web}\n'
+                                 f'Выплата за активность web master - {aff.pay_act_web}')
             break
     else:
         await message.answer('К сожалению ты не являешься партнером TRIGGER\n'
@@ -275,6 +285,8 @@ async def show_admin(message: Message):
     if message.from_user.id in list_admin:
         for web in list_web_master:
             await message.answer(web.__str__())
+        for aff in list_affiliates:
+            await message.answer(aff.__str__())
     else:
         await message.answer('Информация недоступна!\n'
                              'Ты не являешься администратором проекта')
