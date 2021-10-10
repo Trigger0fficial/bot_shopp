@@ -10,7 +10,7 @@ from loader import dp
 from states.verification_coupon import State_coupon
 
 price_forecast = 1000
-price_web_master = 1200
+price_web_master = 1500
 all_web = [1935538508, ]
 lvl_web = {'aff': 0.2, 'new_web': 0.35, 'web': 0.3}
 list_admin = [745832259, 869546657]
@@ -94,6 +94,7 @@ list_web_master = [
     Web_master(user_id=1935538508, user_name='Misha', user_date='25.09', render_lvl='web'),
     Web_master(user_id=56789, user_name='Sergey', user_date='09.10', render_lvl='web', aff=745832259),
     Web_master(user_id=53456, user_name='Slava', user_date='09.10', render_lvl='web', aff=1234),
+    Web_master(user_id=5678942342, user_name='Sergey', user_date='09.10', render_lvl='web', aff=745832259),
     Web_master(user_id=5678942342, user_name='Sergey', user_date='09.10', render_lvl='web', aff=745832259)
 
 
@@ -117,6 +118,15 @@ def activity_web_master():
     list_web_master[3].profit_web(lvl=lvl_web['web'])
     list_web_master[3].profit_web(lvl=lvl_web['web'])
     list_web_master[3].profit_web(lvl=lvl_web['web'])
+    list_web_master[4].profit_web(lvl=lvl_web['web'])
+    list_web_master[4].profit_web(lvl=lvl_web['web'])
+    list_web_master[4].profit_web(lvl=lvl_web['web'])
+    list_web_master[4].profit_web(lvl=lvl_web['web'])
+    list_web_master[4].profit_web(lvl=lvl_web['web'])
+    list_web_master[4].profit_web(lvl=lvl_web['web'])
+    list_web_master[4].profit_web(lvl=lvl_web['web'])
+    list_web_master[4].profit_web(lvl=lvl_web['web'])
+    list_web_master[4].profit_web(lvl=lvl_web['web'])
 
 
     for web in list_web_master:
@@ -130,28 +140,30 @@ def admin_trigger():
     aff_total_pay = 0
     aff_total = 0
     aff_total_count_invited = 0
+    activity_web_master()
+    activity_affiliates()
     for web in list_web_master:
         web_total_pay += web.user_pay
         web_total_count_invited += web.user_all_count_invited
         web_total += 1
 
     for affiliates in list_affiliates:
-        aff_total_pay += affiliates.user_pay
-        aff_total_count_invited += affiliates.user_all_count_invited
+        aff_total_pay += affiliates.pay_new_web + affiliates.pay_act_web
+        aff_total_count_invited += affiliates.web_count
         aff_total += 1
 
     print(f'\n--------Admin---------\n'
           f'\n-------Web-------\n'
-          f'Total web: {web_total}\n'
-          f'All invited: {web_total_count_invited}\n'
-          f'Pay total: {web_total_pay}\n'
+          f'Всего web master: {web_total}\n'
+          f'Всего клиентов: {web_total_count_invited}\n'
+          f'Всего оплатить: {web_total_pay}\n'
           f'\n-------Affiliates-------\n'
-          f'Total affiliates: {aff_total}\n'
-          f'All invited: {aff_total_count_invited}\n'
-          f'Pay total: {aff_total_pay}\n')
+          f'Всего affiliates: {aff_total}\n'
+          f'Всего пригласили web master: {aff_total_count_invited}\n'
+          f'Всего оплатить: {aff_total_pay}\n')
 
-    activity_web_master()
-    activity_affiliates()
+
+
 
 
 admin_trigger()
