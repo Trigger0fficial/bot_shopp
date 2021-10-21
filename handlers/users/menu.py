@@ -235,36 +235,35 @@ async def buy_product(message: Message):
                              f'незафиксированной ℹ️', reply_markup=ReplyKeyboardRemove())
 
 
-@dp.message_handler(Text(equals=['Использовать купон - 1000р💣']), state=None)
-async def buy_product_web(message: Message):
-    await message.answer('Введите купон', reply_markup=ReplyKeyboardRemove())
-    await State_coupon.answer_user.set()
-
-
-@dp.message_handler(state=State_coupon.answer_user)
-async def get_user_coupon(message: Message, state: FSMContext):
-    answer_user = message.text
-    await state.update_data(answer=answer_user)
-    data = await state.get_data()
-    user = data.get('answer')
-    if user in str(all_web):
-        comment_user = str(user) + 'Afc' + str(message.from_user.username)
-        await message.answer('Твой купон действительный!\n'
-                             f'Ты выбрал к покупке продукт FORECAST.\n\n'
-                             f'Чтобы оплатить продукт, тебе необходимо \n'
-                             f'воспользоваться переводом средств на карту:\n'
-                             f'4276 5209 6316 4385 ✅\n\n'
-                             f'❗️Важно❗️Чтобы платёж прошёл успешно:\n'
-                             f'Необходимо прикрепить комментарий к платежу:\n'
-                             f'{comment_user}\nИ указать соотвествующую сумму выбранного вами \nпакета❗️\n'
-                             f'ℹ️В ином случае твоя покупка будет считаться\n'
-                             f'незафиксированной ℹ️', reply_markup=ReplyKeyboardRemove()
-                             )
-        await state.finish()
-    else:
-        await message.answer('К сожалению, такого купона нет!')
-        await state.finish()
-
+# @dp.message_handler(Text(equals=['Использовать купон - 1000р💣']), state=None)
+# async def buy_product_web(message: Message):
+#     await message.answer('Введите купон', reply_markup=ReplyKeyboardRemove())
+#     await State_coupon.answer_user.set()
+#
+#
+# @dp.message_handler(state=State_coupon.answer_user)
+# async def get_user_coupon(message: Message, state: FSMContext):
+#     answer_user = message.text
+#     await state.update_data(answer=answer_user)
+#     data = await state.get_data()
+#     user = data.get('answer')
+#     if user in str(all_web):
+#         comment_user = str(user) + 'Afc' + str(message.from_user.username)
+#         await message.answer('Твой купон действительный!\n'
+#                              f'Чтобы оплатить продукт, тебе необходимо \n'
+#                              f'воспользоваться переводом средств на карту:\n'
+#                              f'4276 5209 6316 4385 ✅\n\n'
+#                              f'❗️Важно❗️Чтобы платёж прошёл успешно:\n'
+#                              f'Необходимо прикрепить комментарий к платежу:\n'
+#                              f'{comment_user}\nИ указать соотвествующую сумму выбранного вами \nпакета❗️\n'
+#                              f'ℹ️В ином случае твоя покупка будет считаться\n'
+#                              f'незафиксированной ℹ️', reply_markup=ReplyKeyboardRemove()
+#                              )
+#         await state.finish()
+#     else:
+#         await message.answer('К сожалению, такого купона нет!', reply_markup=choice)
+#         await state.finish()
+#
 
 @dp.message_handler(Command('status'))
 async def show_status(message: Message):
@@ -322,3 +321,5 @@ async def show_vip_channel(message: Message):
 @dp.message_handler(Text(equals=['Демо FORECAST🔥']))
 async def show_demo(message: Message):
     await message.answer('В разработке.', reply_markup=ReplyKeyboardRemove())
+
+
