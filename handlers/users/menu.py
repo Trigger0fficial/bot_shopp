@@ -93,9 +93,7 @@ list_affiliates = [
 list_web_master = [
     Web_master(user_id=1935538508, user_name='Misha', user_date='25.09', render_lvl='web'),
     Web_master(user_id=56789, user_name='Sergey', user_date='09.10', render_lvl='web', aff=745832259),
-    Web_master(user_id=53456, user_name='Slava', user_date='09.10', render_lvl='web', aff=1234),
-    Web_master(user_id=5678942342, user_name='Sergey', user_date='09.10', render_lvl='web', aff=745832259),
-    Web_master(user_id=5678942342, user_name='Sergey', user_date='09.10', render_lvl='web', aff=745832259)
+
 
 
 ]
@@ -111,22 +109,8 @@ def activity_affiliates():
 
 
 def activity_web_master():
-    list_web_master[2].profit_web(lvl=lvl_web['web'])
-    list_web_master[1].profit_web(lvl=lvl_web['web'])
-    list_web_master[2].profit_web(lvl=lvl_web['web'])
-    list_web_master[3].profit_web(lvl=lvl_web['web'])
-    list_web_master[3].profit_web(lvl=lvl_web['web'])
-    list_web_master[3].profit_web(lvl=lvl_web['web'])
-    list_web_master[3].profit_web(lvl=lvl_web['web'])
-    list_web_master[4].profit_web(lvl=lvl_web['web'])
-    list_web_master[4].profit_web(lvl=lvl_web['web'])
-    list_web_master[4].profit_web(lvl=lvl_web['web'])
-    list_web_master[4].profit_web(lvl=lvl_web['web'])
-    list_web_master[4].profit_web(lvl=lvl_web['web'])
-    list_web_master[4].profit_web(lvl=lvl_web['web'])
-    list_web_master[4].profit_web(lvl=lvl_web['web'])
-    list_web_master[4].profit_web(lvl=lvl_web['web'])
-    list_web_master[4].profit_web(lvl=lvl_web['web'])
+    list_web_master[0].profit_web(lvl=lvl_web['web'])
+
 
 
     for web in list_web_master:
