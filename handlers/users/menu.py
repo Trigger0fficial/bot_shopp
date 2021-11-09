@@ -13,7 +13,9 @@ price_forecast = 1000
 price_web_master = 1500
 all_web = [1935538508, ]
 lvl_web = {'aff': 0.2, 'new_web': 0.35, 'web': 0.3}
+list_product = {'py_start': 2500, 'C_UNITY': 3000, 'py_pro': 3500, 'pm_12': 4300}
 list_admin = [745832259, 869546657]
+
 
 
 class Web_master:
@@ -29,13 +31,13 @@ class Web_master:
         self.lvl = user_lvl
         self.aff = aff
 
-    def profit_web(self, lvl):
+    def profit_web(self, lvl, product=0):
         self.user_count_invited += 1
         self.user_all_count_invited += 1
         if self.aff == 0:
-            self.user_pay += 0.4 * price_forecast
+            self.user_pay += 0.4 * product
         else:
-            self.user_pay += lvl * price_forecast
+            self.user_pay += lvl * product
 
     def paid_web(self):
         self.user_pay = 0
@@ -65,7 +67,7 @@ class Affiliates(Web_master):
         for web_master in list_web_master:
             if web_master.aff == self.user_id:
                 self.total_web_invited += web_master.user_all_count_invited
-                self.pay_act_web += web_master.user_all_count_invited * price_forecast * lvl
+                self.pay_act_web += web_master.user_all_count_invited * list_product['py_start'] * lvl
 
     def new_web_master(self, lvl):
         for web_master in list_web_master:
@@ -88,11 +90,18 @@ class Affiliates(Web_master):
 list_affiliates = [
     Affiliates(user_name='Dima', user_id=745832259, user_date='10.10'),
     Affiliates(user_name='Valera', user_id=869546657, user_date='10.10'),
+    Affiliates(user_name='Egor', user_id=1111, user_date='20.11'),
 ]
 
 list_web_master = [
     Web_master(user_id=1935538508, user_name='Misha', user_date='25.09', render_lvl='web'),
     Web_master(user_id=56789, user_name='Sergey', user_date='09.10', render_lvl='web', aff=745832259),
+    Web_master(user_id=1111, user_name='Aleksey', user_date='21.11', render_lvl='web', aff=1111),
+    Web_master(user_id=2222, user_name='Sveta', user_date='21.11', render_lvl='web', aff=1111),
+    Web_master(user_id=2222, user_name='Sveta', user_date='21.11', render_lvl='web', aff=1111),
+    Web_master(user_id=2222, user_name='Sveta', user_date='21.11', render_lvl='web', aff=1111),
+    Web_master(user_id=2222, user_name='Sveta', user_date='21.11', render_lvl='web', aff=1111),
+    Web_master(user_id=2222, user_name='Sveta', user_date='21.11', render_lvl='web', aff=1111),
 
 
 
@@ -109,9 +118,19 @@ def activity_affiliates():
 
 
 def activity_web_master():
-    list_web_master[0].profit_web(lvl=lvl_web['web'])
-
-
+    list_web_master[1].profit_web(lvl=lvl_web['web'], product=list_product['py_start'])
+    list_web_master[1].profit_web(lvl=lvl_web['web'], product=list_product['C_UNITY'])
+    list_web_master[0].profit_web(lvl=lvl_web['web'], product=list_product['pm_12'])
+    list_web_master[1].profit_web(lvl=lvl_web['web'], product=list_product['py_start'])
+    list_web_master[1].profit_web(lvl=lvl_web['web'], product=list_product['C_UNITY'])
+    list_web_master[0].profit_web(lvl=lvl_web['web'], product=list_product['pm_12'])
+    list_web_master[3].profit_web(lvl=lvl_web['web'], product=list_product['C_UNITY'])
+    list_web_master[3].profit_web(lvl=lvl_web['web'], product=list_product['C_UNITY'])
+    list_web_master[3].profit_web(lvl=lvl_web['web'], product=list_product['C_UNITY'])
+    list_web_master[2].profit_web(lvl=lvl_web['web'], product=list_product['C_UNITY'])
+    list_web_master[2].profit_web(lvl=lvl_web['web'], product=list_product['C_UNITY'])
+    list_web_master[2].profit_web(lvl=lvl_web['web'], product=list_product['C_UNITY'])
+    list_web_master[2].profit_web(lvl=lvl_web['web'], product=list_product['C_UNITY'])
 
     for web in list_web_master:
         print(web.__str__())
@@ -147,9 +166,6 @@ def admin_trigger():
           f'Всего оплатить: {aff_total_pay}\n')
 
 
-
-
-
 admin_trigger()
 
 
@@ -168,7 +184,7 @@ async def get_food(message: Message):
                              'котором ты ознакомишься с основными аспектами \n'
                              'твоей будущей деятельности.✅\n'
                              'Желаем удачи! С уважением TRIGGER_TEAMS❗️\n'
-                             'https://t.me/joinchat/sCVGkTC9ojs4YTMy',
+                             'https://t.me/joinchat/RQA8gMdIt_A5YTgy',
                              reply_markup=ReplyKeyboardRemove())
 
     elif message.text == 'Купить FORECAST ✅':

@@ -5,7 +5,7 @@ from aiogram.types import ReplyKeyboardMarkup, KeyboardButton
 menu = ReplyKeyboardMarkup(
     keyboard=[
         [
-            KeyboardButton(text='Купить FORECAST ✅'),
+            # KeyboardButton(text='Купить FORECAST ✅'),
             KeyboardButton(text='Курсы 🎓')
         ],
 
@@ -20,11 +20,11 @@ menu = ReplyKeyboardMarkup(
 show_courses = ReplyKeyboardMarkup(
     keyboard=[
         [
-             KeyboardButton('Информация о курсах')
+             KeyboardButton('❓Информация о курсах❓')
         ],
 
         [
-            KeyboardButton('Купить курсы')
+            KeyboardButton('Купить курсы✅')
         ]
     ]
 )
@@ -32,12 +32,12 @@ show_courses = ReplyKeyboardMarkup(
 choice_courses = ReplyKeyboardMarkup(
     keyboard=[
         [
-            KeyboardButton('Py start'),
-            KeyboardButton('Py pro'),
-            KeyboardButton('Js basics')
+            KeyboardButton('Py start 🔥'),
+            KeyboardButton('Py pro ⛔'),
+            KeyboardButton('C_UNITY 💥')
         ],
         [
-            KeyboardButton('Выбрать пакет')
+            KeyboardButton('Выбрать пакет 🔜')
         ]
     ]
 )
@@ -45,11 +45,11 @@ choice_courses = ReplyKeyboardMarkup(
 select_package = ReplyKeyboardMarkup(
     keyboard=[
         [
-            KeyboardButton('Py start + Py pro')
+            KeyboardButton('⛔Py start + Py pro⛔')
         ],
         [
-            KeyboardButton('Py pro + Js basics'),
-            KeyboardButton('Py start + Js basics')
+            KeyboardButton('⛔Py pro + C_UNITY⛔'),
+            KeyboardButton('🔥Py start + C_UNITY💥')
         ]
     ]
 )
@@ -57,10 +57,10 @@ select_package = ReplyKeyboardMarkup(
 buy_course = ReplyKeyboardMarkup(
     keyboard=[
         [
-            KeyboardButton(f'Использовать купон')
+            KeyboardButton(f'Использовать купон 💣')
         ],
         [
-            KeyboardButton(f'Купить ')
+            KeyboardButton(f'Купить ✅')
         ]
     ]
 )
