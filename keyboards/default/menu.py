@@ -88,3 +88,16 @@ info = ReplyKeyboardMarkup(
         ]
     ]
 )
+
+
+admin_btn = ReplyKeyboardMarkup(
+    keyboard=[
+        [
+            KeyboardButton(text='Отправить курс 💎'),
+            KeyboardButton(text='Webmaster 📈')
+        ],
+        [
+            KeyboardButton(text='Статистика 🔎')
+        ]
+    ]
+)

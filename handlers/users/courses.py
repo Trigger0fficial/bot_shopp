@@ -1,16 +1,21 @@
 from aiogram.dispatcher import FSMContext
 from aiogram.dispatcher.filters import Command, Text
 from aiogram.types import Message, ReplyKeyboardRemove
-from time import sleep
 
-
-from aiogram.types.base import InputFile
-
+from app import start_bot_data
 from handlers.users.menu import all_web
 from keyboards.default import menu
 from keyboards.default.menu import choice, info, choice_courses, select_package, buy_course, show_courses
-from loader import dp
+from loader import dp, bot
 from states.verification_coupon import State_coupon
+
+
+# from handlers.users.admin import counter_buy, counter_courses
+
+counter_courses = 0
+counter_coupon = 0
+counter_buy = 0
+counter_info_courses = 0
 
 PY_PRO = 2600
 PY_START = 2500
@@ -22,13 +27,14 @@ name_course_buy = 0
 answer_description = ''
 answer_gif = ''
 courses_gif = open("Gif/courses.mp4", "rb")
+list_admin = [745832259, 869546657]
 
 
 
 @dp.message_handler(Text(equals=['Курсы 🎓']))
 async def show_course(message: Message):
     # await message.answer_video(video=courses_gif)
-
+    global counter_courses
     await message.answer('❗Новый проект от TRIGGER_COURSES предлагает Вам несколько курсов на разные сферы IT❗\n'
                          'Каждый курс включает в себя до 20 видео лекций, десятки практических задач разного уровня '
                          'сложности, личного наставника и возможность купить сразу пакет курсов и получить за это '
@@ -39,12 +45,17 @@ async def show_course(message: Message):
                          'Для ознакомления более детальной информации\n'
                          'мы Вам сначала предлагаем посетить страницу\n'
                          '"Информация о курсах📌"', reply_markup=show_courses)
+    if message.from_user.id not in list_admin:
+        counter_courses += 1
 
 
 
 @dp.message_handler(Text(equals='❓Информация о курсах❓'))
 async def inf_courses(message: Message):
+    global counter_info_courses
     await message.answer('https://t.me/joinchat/MLTXX7PJEXZiZDAy')
+    if message.from_user.id not in list_admin:
+        counter_info_courses += 1
 
 
 @dp.message_handler(Text(equals='Купить курсы✅'))
@@ -159,17 +170,24 @@ async def buy_package(message: Message):
 
 @dp.message_handler(Text(equals=['Использовать купон 💣']), state=None)
 async def buy_product_web(message: Message):
+    global counter_coupon
     await message.answer('Введите купон', reply_markup=ReplyKeyboardRemove())
+    if message.from_user.id not in list_admin:
+        counter_coupon += 1
     await State_coupon.answer_user.set()
 
 
 @dp.message_handler(state=State_coupon.answer_user)
 async def get_user_coupon(message: Message, state: FSMContext):
+    global name_course_buy
     answer_user = message.text
     await state.update_data(answer=answer_user)
     data = await state.get_data()
     user = data.get('answer')
+
     if user in str(all_web):
+        if user == str(all_web[0]):
+            name_course_buy += name_course_buy * 0.15
         comment_user = str(user) + 'Afc' + str(message.from_user.id)
         await message.answer('Твой купон действительный!\n'
                              f'Чтобы оплатить , тебе необходимо \n'
@@ -190,13 +208,29 @@ async def get_user_coupon(message: Message, state: FSMContext):
 
 @dp.message_handler(Text(equals='Купить ✅'))
 async def buy_courses(message: Message):
-    comment = message.from_user.username + "2e" + str(message.from_user.id)
+    global counter_buy
+    comment = message.from_user.username + "2e" + str(message.chat.id)
     await message.answer(f'Чтобы оплатить курс, тебе необходимо \n'
                          f'воспользоваться переводом средств на карту:\n'
                          f'4276 5209 6316 4385 ✅\n'
-                         f'Стоимость твоего курса составляет - {name_course_buy * 1.2}р💥\n\n'
+                         f'Стоимость твоего курса составляет - {name_course_buy * 1.3}р💥\n\n'
                          f'❗️Важно❗️Чтобы платёж прошёл успешно:\n'
                          f'Необходимо прикрепить комментарий к платежу:\n'
                          f'{comment}\nИ указать соотвествующую сумму выбранного вами \nкурса/пакета курса❗️\n'
                          f'ℹ️В ином случае твоя покупка будет считаться\n'
                          f'незафиксированной ℹ️', reply_markup=ReplyKeyboardRemove())
+    if message.from_user.id not in list_admin:
+        counter_buy += 1
+
+
+
+@dp.message_handler(Text(equals='Статистика 🔎'))
+async def show_statics(message: Message):
+    await message.answer(f'Дата запуска бота: {start_bot_data}\n'
+                         f'Статистика посещения:\n'
+                         f'Переходы на курсы: {counter_courses}\n'
+                         f'Переходы на информацию о курсах: {counter_info_courses}\n'
+                         f'Переходы на покупку: {counter_buy}\n'
+                         f'Переходы на покупку с купоном {counter_coupon}')
+
+

@@ -11,12 +11,15 @@ from states.verification_coupon import State_coupon
 
 price_forecast = 1000
 price_web_master = 1500
-all_web = [1935538508, ]
+TRIGGER_COUPON = 111111111
+all_web = [TRIGGER_COUPON, 1935538508, ]
 lvl_web = {'aff': 0.2, 'new_web': 0.35, 'web': 0.3}
 list_product = {'py_start': 2500, 'C_UNITY': 3000, 'py_pro': 3500, 'pm_12': 4300}
+
 list_admin = [745832259, 869546657]
 
-
+counter_info_web = 0
+counter_web = 0
 
 class Web_master:
     def __init__(self, user_id, user_name, user_date, user_all_count_invited=0, user_lvl='x1', render_lvl='web',
@@ -88,20 +91,13 @@ class Affiliates(Web_master):
 
 
 list_affiliates = [
-    Affiliates(user_name='Dima', user_id=745832259, user_date='10.10'),
-    Affiliates(user_name='Valera', user_id=869546657, user_date='10.10'),
-    Affiliates(user_name='Egor', user_id=1111, user_date='20.11'),
+
 ]
 
 list_web_master = [
-    Web_master(user_id=1935538508, user_name='Misha', user_date='25.09', render_lvl='web'),
-    Web_master(user_id=56789, user_name='Sergey', user_date='09.10', render_lvl='web', aff=745832259),
-    Web_master(user_id=1111, user_name='Aleksey', user_date='21.11', render_lvl='web', aff=1111),
-    Web_master(user_id=2222, user_name='Sveta', user_date='21.11', render_lvl='web', aff=1111),
-    Web_master(user_id=2222, user_name='Sveta', user_date='21.11', render_lvl='web', aff=1111),
-    Web_master(user_id=2222, user_name='Sveta', user_date='21.11', render_lvl='web', aff=1111),
-    Web_master(user_id=2222, user_name='Sveta', user_date='21.11', render_lvl='web', aff=1111),
-    Web_master(user_id=2222, user_name='Sveta', user_date='21.11', render_lvl='web', aff=1111),
+    Web_master(user_id=797516326, user_name='Василий', user_date='12.11'),
+    Web_master(user_id=745832259, user_name='Дмитрий', user_date='12.11')
+
 
 
 
@@ -118,19 +114,6 @@ def activity_affiliates():
 
 
 def activity_web_master():
-    list_web_master[1].profit_web(lvl=lvl_web['web'], product=list_product['py_start'])
-    list_web_master[1].profit_web(lvl=lvl_web['web'], product=list_product['C_UNITY'])
-    list_web_master[0].profit_web(lvl=lvl_web['web'], product=list_product['pm_12'])
-    list_web_master[1].profit_web(lvl=lvl_web['web'], product=list_product['py_start'])
-    list_web_master[1].profit_web(lvl=lvl_web['web'], product=list_product['C_UNITY'])
-    list_web_master[0].profit_web(lvl=lvl_web['web'], product=list_product['pm_12'])
-    list_web_master[3].profit_web(lvl=lvl_web['web'], product=list_product['C_UNITY'])
-    list_web_master[3].profit_web(lvl=lvl_web['web'], product=list_product['C_UNITY'])
-    list_web_master[3].profit_web(lvl=lvl_web['web'], product=list_product['C_UNITY'])
-    list_web_master[2].profit_web(lvl=lvl_web['web'], product=list_product['C_UNITY'])
-    list_web_master[2].profit_web(lvl=lvl_web['web'], product=list_product['C_UNITY'])
-    list_web_master[2].profit_web(lvl=lvl_web['web'], product=list_product['C_UNITY'])
-    list_web_master[2].profit_web(lvl=lvl_web['web'], product=list_product['C_UNITY'])
 
     for web in list_web_master:
         print(web.__str__())
@@ -178,14 +161,18 @@ async def show_menu(message: Message):
 @dp.message_handler(Text(equals=['Купить FORECAST ✅', 'Стать Web master🔥',
                                  'INFO WEB⚠', ]))
 async def get_food(message: Message):
+    global counter_info_web
     if message.text == 'INFO WEB⚠':
-        await message.answer('Решил стать Вебмастером проекта TRIGGER? Отлично!\n'
+        await message.answer('Решил стать Вебмастером компании TRIGGER? Отлично!\n'
                              'Тогда переходи по ссылке в информационный канал, в \n'
                              'котором ты ознакомишься с основными аспектами \n'
                              'твоей будущей деятельности.✅\n'
                              'Желаем удачи! С уважением TRIGGER_TEAMS❗️\n'
                              'https://t.me/joinchat/RQA8gMdIt_A5YTgy',
                              reply_markup=ReplyKeyboardRemove())
+
+        if message.from_user.id in list_admin:
+            counter_info_web += 1
 
     elif message.text == 'Купить FORECAST ✅':
         await message.answer('ℹ️ Поговорим о продукте который предоставляет наш проект❗\n'
@@ -205,14 +192,18 @@ async def get_food(message: Message):
                              reply_markup=choice)
 
     elif message.text == 'Стать Web master🔥':
+        global counter_web
         await message.answer(f'{message.from_user.full_name}, '
-                             f'поздравляю тебя❗️ Ты решил стать Вебмастером проекта TRIGGER.\n'
+                             f'поздравляю тебя❗️ Ты решил стать Вебмастером компании TRIGGER.\n'
                              f'Чтобы получить доступ к реферальной программе проекта,\n'
                              f'Напиши фразу "Хочу стать Вебмастером" и пришли мне кодовое слово\n'
                              f'На аккаунт администрации @keepeero\n'
                              f'Твое кодовое слово - {message.from_user.id}\n'
                              f'В течении 10-15 мин, администрация проекта свяжется с тобой ✅',
                              reply_markup=ReplyKeyboardRemove())
+        if message.from_user.id in list_admin:
+            counter_web += 1
+
 
 
 
@@ -235,35 +226,7 @@ async def buy_product(message: Message):
                              f'незафиксированной ℹ️', reply_markup=ReplyKeyboardRemove())
 
 
-# @dp.message_handler(Text(equals=['Использовать купон - 1000р💣']), state=None)
-# async def buy_product_web(message: Message):
-#     await message.answer('Введите купон', reply_markup=ReplyKeyboardRemove())
-#     await State_coupon.answer_user.set()
-#
-#
-# @dp.message_handler(state=State_coupon.answer_user)
-# async def get_user_coupon(message: Message, state: FSMContext):
-#     answer_user = message.text
-#     await state.update_data(answer=answer_user)
-#     data = await state.get_data()
-#     user = data.get('answer')
-#     if user in str(all_web):
-#         comment_user = str(user) + 'Afc' + str(message.from_user.username)
-#         await message.answer('Твой купон действительный!\n'
-#                              f'Чтобы оплатить продукт, тебе необходимо \n'
-#                              f'воспользоваться переводом средств на карту:\n'
-#                              f'4276 5209 6316 4385 ✅\n\n'
-#                              f'❗️Важно❗️Чтобы платёж прошёл успешно:\n'
-#                              f'Необходимо прикрепить комментарий к платежу:\n'
-#                              f'{comment_user}\nИ указать соотвествующую сумму выбранного вами \nпакета❗️\n'
-#                              f'ℹ️В ином случае твоя покупка будет считаться\n'
-#                              f'незафиксированной ℹ️', reply_markup=ReplyKeyboardRemove()
-#                              )
-#         await state.finish()
-#     else:
-#         await message.answer('К сожалению, такого купона нет!', reply_markup=choice)
-#         await state.finish()
-#
+
 
 @dp.message_handler(Command('status'))
 async def show_status(message: Message):
@@ -275,7 +238,7 @@ async def show_status(message: Message):
                                  f'Всего приглашенных пользователей - {web.user_all_count_invited}\n'
                                  f'Неоплаченных пользователей - {web.user_count_invited}\n'
                                  f'Выплата - {web.user_pay}', reply_markup=ReplyKeyboardRemove())
-            break
+            return
     for aff in list_affiliates:
         if message.from_user.id == aff.user_id:
             await message.answer(f'Имя - {aff.user_name}\n'
@@ -285,13 +248,14 @@ async def show_status(message: Message):
                                  f'Активность web master - {aff.total_web_invited}\n'
                                  f'Выплата за новых web master - {aff.pay_new_web}\n'
                                  f'Выплата за активность web master - {aff.pay_act_web}')
-            break
+            return
     else:
         await message.answer('К сожалению ты не являешься партнером TRIGGER\n'
                              'Ознакомься как стать Web master из пункта /menu')
 
 
-@dp.message_handler(Command('admin'))
+
+@dp.message_handler(Text(equals='Webmaster 📈'))
 async def show_admin(message: Message):
     if message.from_user.id in list_admin:
         for web in list_web_master:
