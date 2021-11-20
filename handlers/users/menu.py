@@ -97,7 +97,6 @@ list_affiliates = [
 list_web_master = [
     Web_master(user_id=797516326, user_name='Василий', user_date='12.11'),
     Web_master(user_id=895377481, user_name='Вероника', user_date='18.11'),
-    Web_master(user_id=745832259, user_name='Дмитрий', user_date='12.11'),
     Web_master(user_id=713032733, user_name='Богдан Ставро', user_date='20.11'),
     Web_master(user_id=1834774855, user_name= 'Сергей Низовкин', user_date='20.11')
 
