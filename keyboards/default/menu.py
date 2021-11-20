@@ -57,6 +57,7 @@ select_package = ReplyKeyboardMarkup(
 buy_course = ReplyKeyboardMarkup(
     keyboard=[
         [
+            KeyboardButton(f'Демо курс 🔑'),
             KeyboardButton(f'Использовать купон 💣')
         ],
         [

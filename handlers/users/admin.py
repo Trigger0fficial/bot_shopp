@@ -10,19 +10,12 @@ from loader import dp, bot
 # from states.verification_coupon import State_coupon, State_chat_id
 from states.verification_coupon import State_chat_id
 
-# from handlers.users.menu import counter_web, counter_info_web
-# from handlers.users.courses import counter_buy, counter_courses, counter_coupon
 
-
-# counter_web = 0
-# counter_info_web = 0
-# counter_buy = 0
-# counter_courses = 0
-# counter_coupon = 0
 
 list_admin = [745832259, 869546657]
-act_admin = False
 send_product = ''
+courses = ''
+courses_gif = ''
 chat_id = ''
 
 
@@ -47,21 +40,66 @@ async def send_courses(message: Message):
                                  '❗Py pro + C_UNITY❗', '❗Py start + C_UNITY❗']))
 async def choose_course(message: Message):
     global send_product
+    global courses
+    global courses_gif
     if message.from_user.id in list_admin:
         if message.text == 'Py start ❗':
-            send_product = 'Курс Py start ❗ отправлен'
+            send_product = 'Привет дорогой друг❗\n' \
+                           'Ты приобрёл курс по программированию PY_START 🐍✅\n' \
+                           'Желаем удачи в прохождении данного курса и надеемся\n' \
+                           'увидеть тебя в нашей команде 👥🔥\n\n' \
+                           'PY_START ‼️(https://t.me/joinchat/Lzb6Nm_5Cqo5NWUy)‼\n\n' \
+                           'Возникли вопросы по курсу?\n' \
+                           'Напиши НАМ @keepeero\n\n' \
+                           'С уважением TRIGGER TEAMS ❗'
+            courses = "Py start"
+
         elif message.text == 'Py pro ❗':
-            send_product = 'Курс Py pro ❗ отправлен'
+            send_product = 'В разработке'
+
         elif message.text == 'C_UNITY ❗':
-            send_product = 'Курс C_UNITY ❗ отправлен'
+            send_product = 'Привет дорогой друг❗\n' \
+                           'Ты приобрёл курс по программированию C_UNITY 🐍✅\n' \
+                           'Желаем удачи в прохождении данного курса и надеемся\n' \
+                           'увидеть тебя в нашей команде 👥🔥\n\n' \
+                           'C_UNITY ‼️(https://t.me/joinchat/hNumn91DG6dhNjMy)‼️‼\n\n' \
+                           'Возникли вопросы по курсу?\n' \
+                           'Напиши НАМ @keepeero\n\n' \
+                           'С уважением TRIGGER TEAMS ❗'
+            courses = 'C_UNITY'
+
         elif message.text == '❗Py start + Py pro❗':
-            send_product = 'Пакет ❗Py start + Py pro❗ отправлен'
+            send_product = 'В разработке'
+
         elif message.text == '❗Py pro + C_UNITY❗':
-            send_product = 'Пакет ❗Py pro + C_UNITY❗ отправлен'
+            send_product = 'В разработке'
+
+
         elif message.text == '❗Py start + C_UNITY❗':
-            send_product = 'Пакет ❗Py start + C_UNITY❗ отправлен'
+            send_product = 'Привет дорогой друг❗\n' \
+                           'Ты приобрёл пакет курсов по программированию 🐍✅ PY_START и C_UNITY🐍✅\n' \
+                           'Желаем удачи в прохождении данного курса и надеемся\n' \
+                           'увидеть тебя в нашей команде 👥🔥\n\n' \
+                           'C_UNITY ‼️(https://t.me/joinchat/hNumn91DG6dhNjMy)‼️‼\n' \
+                           'PY_START ‼️(https://t.me/joinchat/Lzb6Nm_5Cqo5NWUy)‼\n\n' \
+                           'Возникли вопросы по курсу?\n' \
+                           'Напиши НАМ @keepeero\n\n' \
+                           'С уважением TRIGGER TEAMS ❗'
+            courses = 'Py start + C_UNITY'
+
+        if courses == 'Py start':
+            courses_gif = 'Gif/py_start-gif.mp4'
+        elif courses == 'C_UNITY':
+            courses_gif = 'Gif/c_unity-gif.mp4'
+        elif courses == 'Py start + C_UNITY':
+            courses_gif = 'Gif/py_start-c_unity-gif.mp4'
+        else:
+            courses_gif = "None"
+
+
     await message.answer('Введи id чата, кому нужно отправить курс/пакет', reply_markup=ReplyKeyboardRemove())
     await State_chat_id.answer_admin.set()
+
 
 @dp.message_handler(state=State_chat_id.answer_admin)
 async def get_chat_id(message: Message, state: FSMContext):
@@ -71,19 +109,15 @@ async def get_chat_id(message: Message, state: FSMContext):
     data = await state.get_data()
     chat_id = data.get('answer')
     await state.finish()
-    await message.answer(text='Сообщение для админа')
+    try:
+        open_gif = open(courses_gif, "rb")
+        await bot.send_video(chat_id=chat_id, video=open_gif)
+        await bot.send_message(text=send_product, chat_id=chat_id)
+        await message.answer('Сообщение было успешно доставлено')
+    except:
+        await message.answer('Сообщение не было доставлено')
 
-    await bot.send_message(text=send_product, chat_id=chat_id)
 
-
-# @dp.message_handler(Text(equals='Статистика 🔎'))
-# async def show_statics(message: Message):
-#     await message.answer(f'Статистика посещения:\n'
-#                          f'Переходы на курсы: {counter_courses}\n'
-#                          f'Переходы на info_web: {counter_info_web}\n'
-#                          f'Переходы на WEB: {counter_web}\n'
-#                          f'Переходы на покупку: {counter_buy}\n'
-#                          f'Переходы на покупку с купоном {counter_coupon}')
 
 
 

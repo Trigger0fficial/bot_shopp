@@ -7,7 +7,7 @@ from handlers.users.menu import all_web
 from keyboards.default import menu
 from keyboards.default.menu import choice, info, choice_courses, select_package, buy_course, show_courses
 from loader import dp, bot
-from states.verification_coupon import State_coupon
+from states.verification_coupon import State_coupon, State_demo_courses
 
 
 # from handlers.users.admin import counter_buy, counter_courses
@@ -16,6 +16,7 @@ counter_courses = 0
 counter_coupon = 0
 counter_buy = 0
 counter_info_courses = 0
+counter_demo_courses = 0
 
 PY_PRO = 2600
 PY_START = 2500
@@ -26,14 +27,13 @@ PM_31 = 3500
 name_course_buy = 0
 answer_description = ''
 answer_gif = ''
-courses_gif = open("Gif/courses.mp4", "rb")
 list_admin = [745832259, 869546657]
 
 
 
 @dp.message_handler(Text(equals=['Курсы 🎓']))
 async def show_course(message: Message):
-    # await message.answer_video(video=courses_gif)
+    await message.answer_video(video=open('Gif/courses.mp4', "rb"))
     global counter_courses
     await message.answer('❗Новый проект от TRIGGER_COURSES предлагает Вам несколько курсов на разные сферы IT❗\n'
                          'Каждый курс включает в себя до 20 видео лекций, десятки практических задач разного уровня '
@@ -206,6 +206,46 @@ async def get_user_coupon(message: Message, state: FSMContext):
         await state.finish()
 
 
+@dp.message_handler(Text(equals='Демо курс 🔑'))
+async def show_demo_courses(message: Message):
+    global counter_demo_courses
+    await message.answer('Введите купон для получения демо курса!', reply_markup=ReplyKeyboardRemove())
+    if message.from_user.id not in list_admin:
+        counter_demo_courses += 1
+    await State_demo_courses.answer_user.set()
+
+
+@dp.message_handler(state=State_demo_courses.answer_user)
+async def get_user_coupon(message: Message, state: FSMContext):
+    answer_user = message.text
+    await state.update_data(answer=answer_user)
+    data = await state.get_data()
+    user = data.get('answer')
+
+
+
+
+    if user in str(all_web):
+        if name_course_buy == PY_START:
+            await message.answer_video(video=open("Gif/py_start-gif.mp4", "rb"))
+            await message.answer('https://t.me/joinchat/1Rv42zpgGvM2NWEy')
+        elif name_course_buy == C_UNITY:
+            await message.answer_video(video=open("Gif/c_unity-gif.mp4", "rb"))
+            await message.answer('Высылаю курс C_UNITY\n'
+                                 'https://t.me/joinchat/0RiWa_WjTUcyNDUy')
+        elif name_course_buy == PM_23:
+            await message.answer_video(video=open("Gif/py_start-c_unity-gif.mp4", "rb"))
+            await message.answer('Высылаю пакет курсов Py_start + C_UNITY\n'
+                                 'https://t.me/joinchat/0RiWa_WjTUcyNDUy\n'
+                                 'https://t.me/joinchat/1Rv42zpgGvM2NWEy')
+        await state.finish()
+    else:
+        await message.answer('К сожалению, такого купона нет!', reply_markup=choice)
+        await state.finish()
+
+
+
+
 @dp.message_handler(Text(equals='Купить ✅'))
 async def buy_courses(message: Message):
     global counter_buy
@@ -230,7 +270,8 @@ async def show_statics(message: Message):
                          f'Статистика посещения:\n'
                          f'Переходы на курсы: {counter_courses}\n'
                          f'Переходы на информацию о курсах: {counter_info_courses}\n'
+                         f'Переходы на демо курсы: {counter_demo_courses}\n'
                          f'Переходы на покупку: {counter_buy}\n'
-                         f'Переходы на покупку с купоном {counter_coupon}')
+                         f'Переходы на покупку с купоном: {counter_coupon}')
 
 

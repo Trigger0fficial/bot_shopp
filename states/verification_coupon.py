@@ -7,3 +7,7 @@ class State_coupon(StatesGroup):
 
 class State_chat_id(StatesGroup):
     answer_admin = State()
+
+
+class State_demo_courses(StatesGroup):
+    answer_user = State()
