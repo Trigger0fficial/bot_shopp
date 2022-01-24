@@ -12,7 +12,7 @@ from states.verification_coupon import State_coupon
 price_forecast = 1000
 price_web_master = 1500
 TRIGGER_COUPON = 1111111111
-all_web = [TRIGGER_COUPON, 1935538508, 895377481, 713032733, 1834774855, 1375629070]
+all_web = [TRIGGER_COUPON]
 lvl_web = {'aff': 0.2, 'new_web': 0.35, 'web': 0.3}
 list_product = {'py_start': 2500, 'C_UNITY': 3000, 'py_pro': 3500, 'pm_12': 4300}
 
@@ -95,16 +95,6 @@ list_affiliates = [
 ]
 
 list_web_master = [
-
-    Web_master(user_id=895377481, user_name='Вероника', user_date='18.11'),
-    Web_master(user_id=713032733, user_name='Богдан Ставро', user_date='20.11'),
-    Web_master(user_id=1834774855, user_name= 'Сергей Низовкин', user_date='20.11'),
-    Web_master(user_id=1375629070, user_name='Жора Неммтуллоев', user_date='21.11'),
-    Web_master(user_id=1231594760, user_name='Заур', user_date='24.11')
-
-
-
-
 
 ]
 
